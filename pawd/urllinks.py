@@ -15,10 +15,33 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 url = input('Enter - ')
-html = urllib.request.urlopen(url, context=ctx).read()
-soup = BeautifulSoup(html, 'html.parser')
+# url='http://py4e-data.dr-chuck.net/known_by_Fikret.html'
+# position = 2
+position = input('Enter position:')
+position = int(position) - 1
+# repeat = 4
+repeat = input('Enter Count:')
+repeat = int(repeat)
 
 # Retrieve all of the anchor tags
-tags = soup('a')
-for tag in tags:
-    print(tag.get('href', None))
+def anchor():
+    html = urllib.request.urlopen(url, context=ctx).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    links=list()
+    tags = soup('a')
+    for tag in tags:
+        # print(tag)
+        tag=(tag.get('href', None))
+        # print(tag)
+        links.append(tag)
+    #print(links)
+    link=links[position]
+    #print('New URL', link)
+    return link
+
+while repeat > 0:
+    nurl = anchor()
+    #print(nurl)
+    url=nurl
+    print(url)
+    repeat=repeat - 1
